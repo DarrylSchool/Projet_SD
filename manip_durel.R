@@ -10,7 +10,10 @@ X1 <- X[, -which(colnames(X) == "Diagnosis")]
 X1 <- X1[, -which(colnames(X1) == "ID")]
 
 # Matrice de corrélation
-
+install.packages("corrplot")
+library(corrplot)
+correlation_matrix <- cor(X1[,1:10])
+corrplot(correlation_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45)
 
 # Boxplot 
 
