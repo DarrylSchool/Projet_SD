@@ -30,3 +30,16 @@ source("/home/darryl/Documents/INFO5/SDD/Projet/Projet_SD/coude.R")
 kmeans_3 <- kmeans(X1_scale, 3)
 kmeans_3_centre_dist <- dist(kmeans_3$centers)
 kmeans_3_dendo_centre_dist <- hclust(kmeans_3_centre_dist, method = "ward.D")
+
+# interpretation des kmeans
+X1 <- X[, -c(1:2)]
+X1_scale <- scale (X1)
+Dn <- dist(X1_scale)
+l <- cmdscale(Dn, k = 2)
+plot(l, type = "n")
+text(l,X$Diagnosis, , col = kmeans_3$cluster)
+
+# Cluster dendrogram pour tout le dataset
+D <- dist(X1_scale)
+resuhist <- hclust(D, method = "ward.D")
+plot(resuhist)
