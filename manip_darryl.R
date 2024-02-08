@@ -43,3 +43,48 @@ text(l,X$Diagnosis, , col = kmeans_3$cluster)
 D <- dist(X1_scale)
 resuhist <- hclust(D, method = "ward.D")
 plot(resuhist)
+
+# Fonction coude (directement dans la console)
+library(factoextra)
+library(ggplot2)
+wss_values <- numeric(length = 9)  # To store the within-cluster sum of squares values
+
+for (k in 2:15) {
+  kmeans_result <- kmeans(X1_scale, centers = k, nstart = 15)
+  wss_values[k - 1] <- kmeans_result$tot.withinss
+}
+
+## Plot the elbow graph to determine the optimal number of clusters
+fviz_nbclust(X1, kmeans, method = "wss") + 
+  geom_vline(xintercept = which.min(wss_values), linetype = 2) + 
+  labs(title = "Elbow Method to Determine Optimal k (Number of Clusters)",
+       x = "Number of Clusters (k)",
+       y = "Total Within-Cluster Sum of Squares (WSS)")
+# PAM
+library(cluster)
+DistIns<-daisy(X1)
+
+## Calculate silhouette widths for different numbers of clusters (k)
+si <- numeric(19)
+for (nbc in 2:20) {
+  resupam <- pam(DistIns, k = nbc)
+  si[nbc - 1] <- resupam$silinfo$avg.width
+}
+
+## Plot silhouette widths to visualize the optimal number of clusters
+plot(2:20, si, type = "l", main = "Evolution de la valeur silhouette")
+
+## Find the optimal number of clusters based on silhouette width
+N <- which.max(si) + 1
+
+## Perform PAM clustering with the optimal number of clusters
+resupam <- pam(DistIns, k = N)
+
+## Plot the resulting PAM clustering
+plot(resupam)
+
+## Perform hierarchical clustering
+resuhclust <- hclust(DistIns)
+
+## Plot the resulting dendrogram
+plot(resuhclust)
