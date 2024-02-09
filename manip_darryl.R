@@ -45,6 +45,8 @@ resuhist <- hclust(D, method = "ward.D")
 plot(resuhist)
 
 # Fonction coude (directement dans la console)
+# https://debian.pkgs.org/sid/debian-main-amd64/r-cran-factoextra_1.0.7-2_all.deb.html
+install.packages("factoextra")
 library(factoextra)
 library(ggplot2)
 wss_values <- numeric(length = 9)  # To store the within-cluster sum of squares values
@@ -60,6 +62,7 @@ fviz_nbclust(X1, kmeans, method = "wss") +
   labs(title = "Elbow Method to Determine Optimal k (Number of Clusters)",
        x = "Number of Clusters (k)",
        y = "Total Within-Cluster Sum of Squares (WSS)")
+
 # PAM
 library(cluster)
 DistIns<-daisy(X1)
@@ -82,7 +85,6 @@ resupam <- pam(DistIns, k = N)
 
 ## Plot the resulting PAM clustering
 plot(resupam)
-
 ## Perform hierarchical clustering
 resuhclust <- hclust(DistIns)
 
