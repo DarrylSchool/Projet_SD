@@ -43,11 +43,7 @@ corrplot(correlation_matrix, method='color', type='upper', col=brewer.pal(n = 8,
 
 # Drop data
 
-<<<<<<< HEAD
 drop_list1 <- c('perimeter1', 'radius1', 'compactness1', 'concave_points1', 'radius2', 'perimeter2', 'radius3', 'perimeter3', 'concavity3' ,'compactness3', 'compactness2', 'concave_points2', 'texture3')
-=======
-drop_list1 <- c('perimeter1', 'radius1', 'compactness1', 'concave_points1', 'radius2', 'perimeter2', 'radius3', 'perimeter3', 'compactness3','concavity3', 'compactness2', 'concave_points2', 'texture3')
->>>>>>> 14a8775a967900b3baa1e71f44a3de3de19d7772
 data_drop <- dataset1[, !colnames(dataset1) %in% drop_list1] 
 data_drop
 data_drop_scale <- scale(data_drop)
@@ -105,6 +101,8 @@ fviz_nbclust(dataset1, kmeans, method = "wss") +
 
 
 # Kmeans drop 
+library(factoextra)
+library(ggplot2)
 wss_values <- numeric(length = 9) 
 for (k in 2:15) {
       kmeans_result <- kmeans(data_drop_scale, centers = k, nstart = 15)
