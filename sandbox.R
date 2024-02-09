@@ -1,24 +1,12 @@
-# Chargement de la bibliothèque nécessaire
-library(cluster)
+sub <- c(sample(1:length(which(S$Diagnosis=="B")), round(0.8*length(which(S$Diagnosis=="B")),digits=0)),
+         sample(1:(length(which(S$Diagnosis=="B"))+1):569,round(0.8*length(which(S$Diagnosis=="M")),digits=0)))
 
-# Initialisation d'un vecteur pour stocker les scores
-scores <- numeric()
-range_values <- 2:5
 
-# Boucle sur les valeurs de range_values
-for (i in range_values) {
-  # Appliquer l'algorithme K-means avec le nombre de clusters i
-  kmeans <- kmeans(data_drop_scale, centers = i, nstart = 10, algorithm = "Lloyd")
-  
-  # Calcul du score de silhouette
-  score <- silhouette(kmeans$cluster, dist(data_drop_scale))$avg.width
-  print(paste("\nNumber of clusters:", i))
-  print(paste("\nSilhouette score =", score))
-  
-  # Stockage du score
-  scores <- c(scores, score)
+classes <- c('M', 'B')
+for (classe in classes) {
+  subset <- S[S$Diagnosis == classe, ]
+  n <- round(nrow(subset) * 0.8)
+  indices <- sample(1:nrow(subset), n, replace = FALSE)
+  echantillon <- rbind(echantillon, subset[indices, ])
 }
 
-# Tracé des scores
-barplot(scores, names.arg = range_values, col = "black", xlab = "Number of clusters", 
-        ylab = "Silhouette score", main = "Silhouette score vs no.of clusters")

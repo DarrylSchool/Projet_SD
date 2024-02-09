@@ -43,7 +43,11 @@ corrplot(correlation_matrix, method='color', type='upper', col=brewer.pal(n = 8,
 
 # Drop data
 
+<<<<<<< HEAD
+drop_list1 <- c('perimeter1', 'radius1', 'compactness1', 'concave_points1', 'radius2', 'perimeter2', 'radius3', 'perimeter3', 'concavity3' ,'compactness3', 'compactness2', 'concave_points2', 'texture3')
+=======
 drop_list1 <- c('perimeter1', 'radius1', 'compactness1', 'concave_points1', 'radius2', 'perimeter2', 'radius3', 'perimeter3', 'compactness3','concavity3', 'compactness2', 'concave_points2', 'texture3')
+>>>>>>> 14a8775a967900b3baa1e71f44a3de3de19d7772
 data_drop <- dataset1[, !colnames(dataset1) %in% drop_list1] 
 data_drop
 data_drop_scale <- scale(data_drop)
@@ -145,6 +149,11 @@ barplot(si, names.arg = 2:20, col = "black", xlab = "Number of clusters",
 
 
 
+
+## Visualistion des clusters
+
+
+
 ## Apprentissage supervisé
 #Construction de l'échantillon
 
@@ -165,6 +174,7 @@ sub <- c(sample_indices_M, sample_indices_B)
 ######Arbre de décision 
 library(rpart)
 fit <- rpart(S$Diagnosis~ ., data=S, subset=sub)
+fit
 plot(fit)
 text(fit)
 
